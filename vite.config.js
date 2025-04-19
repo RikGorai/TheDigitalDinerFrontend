@@ -7,9 +7,11 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: process.env.VITE_BACKEND_URL || 'http://localhost:5000', // Use environment variable or fallback to localhost
+        target: process.env.NODE_ENV === 'production'
+          ? process.env.VITE_BACKEND_URL // Use backend URL in production
+          : 'http://localhost:5000', // Use localhost in development
         changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/api/, ''), // Remove '/api' prefix if needed
+        secure: false, // Disable SSL verification for local development
       },
     },
   },

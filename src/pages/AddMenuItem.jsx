@@ -7,6 +7,7 @@ export default function AddMenuItem() {
     const [description, setDescription] = useState('');
     const [imageFile, setImageFile] = useState(null); // State for image file
     const [category, setCategory] = useState('');
+    const [newCategory, setNewCategory] = useState(''); // State for new category
     const [categories, setCategories] = useState([]); // State to store menu categories
     const [loading, setLoading] = useState(false); // Add loading state
 
@@ -28,7 +29,7 @@ export default function AddMenuItem() {
             formData.append('name', name);
             formData.append('price', price);
             formData.append('description', description);
-            formData.append('category', category);
+            formData.append('category', newCategory || category); // Use newCategory if provided, otherwise use selected category
             if (imageFile) {
                 formData.append('image', imageFile); // Append the image file
             }
@@ -45,6 +46,7 @@ export default function AddMenuItem() {
             setDescription('');
             setImageFile(null);
             setCategory('');
+            setNewCategory(''); // Clear the new category field
         } catch (err) {
             alert('Failed to add menu item.');
         } finally {
@@ -53,7 +55,7 @@ export default function AddMenuItem() {
     };
 
     return (
-        <div className="p-4 max-w-md mx-auto">
+        <div className="px-4 py-16 max-w-md mx-auto">
             <h2 className="text-2xl font-bold mb-4">Add Menu Item</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <input
@@ -87,21 +89,27 @@ export default function AddMenuItem() {
                         accept="image/*" // Restrict to image files
                         required
                     />
-                    <div className="w-full border p-2 rounded bg-gray-800 text-gray-300 text-center cursor-pointer hover:bg-gray-700">
+                    <div className="w-full border p-2 rounded  text-gray-300 text-center cursor-pointer hover:bg-gray-700">
                         {imageFile ? imageFile.name : 'Choose Image'}
                     </div>
                 </div>
                 <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full border p-2 rounded bg-gray-800 text-gray-300"
-                    required
+                    className="w-full border p-2 rounded  text-gray-300"
                 >
                     <option value="" disabled className="text-gray-500">Select Category</option>
                     {categories.map((cat, index) => (
                         <option key={index} value={cat} className="text-gray-300 bg-gray-800">{cat}</option>
                     ))}
                 </select>
+                <input
+                    type="text"
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                    placeholder="Enter new category (optional)"
+                    className="w-full border p-2 rounded  text-gray-300"
+                />
                 <button
                     type="submit"
                     className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700"

@@ -14,7 +14,7 @@ export default function OrderConfirmation() {
     }
 
     return (
-        <div className="p-4 max-w-3xl mx-auto bg-gray-800 text-white rounded-lg shadow-lg">
+        <div className="px-4 py-16 max-w-3xl mx-auto bg-gray-800 text-white rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold mb-4 text-center">Order Confirmation</h2>
             <div className="mb-6">
                 <h3 className="text-lg font-semibold">Customer Details</h3>

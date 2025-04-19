@@ -44,7 +44,7 @@ export default function RemoveMenuItem() {
     }
 
     return (
-        <div className="p-4 max-w-4xl mx-auto text-gray-300">
+        <div className="px-4 py-16 max-w-4xl mx-auto text-gray-300">
             <h2 className="text-3xl font-bold mb-6 text-center">Remove Menu Items</h2>
             {menuItems.length === 0 ? (
                 <p className="text-center">No menu items found.</p>

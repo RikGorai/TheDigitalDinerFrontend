@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+const baseURL =
+    import.meta.env.MODE === 'production'
+        ? import.meta.env.VITE_BACKEND_URL + '/api' // Use backend URL in production
+        : 'http://localhost:5000/api'; // Use localhost in development
+
 const API = axios.create({
-    baseURL: import.meta.env.VITE_BACKEND_URL + '/api', // Use environment variable for backend URL
+    baseURL,
     withCredentials: true, 
     headers: {
         'Content-Type': 'application/json',

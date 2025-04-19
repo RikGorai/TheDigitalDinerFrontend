@@ -1,19 +1,26 @@
 import { useState } from 'react';
-import useAuthStore from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
+import API from '../api/axios';
+import useAuthStore from '../store/authStore';
 
 export default function Signup() {
-    const { signup } = useAuthStore();
     const navigate = useNavigate();
+    const { login } = useAuthStore(); // Access the login function from the auth store
     const [loading, setLoading] = useState(false); // Add loading state
-    const [credentials, setCredentials] = useState({ name: '', email: '', password: '' });
+    const [credentials, setCredentials] = useState({ name: '', phone: '', password: '' }); // Ensure phone is included
 
     const handleSignup = async () => {
         setLoading(true); // Set loading to true
         try {
-            await signup(credentials);
-            navigate('/'); // Redirect to home after successful signup
+            const res = await API.post('/auth/signup', credentials); // Ensure the correct endpoint is used
+            const { user, token } = res.data; // Extract user and token from the response
+            localStorage.setItem('user', JSON.stringify(user)); // Save user data in localStorage
+            localStorage.setItem('token', token); // Save token in localStorage
+            login(user, token); // Automatically log in the user
+            alert('Signup successful! Redirecting to home...');
+            navigate('/'); // Redirect to home after successful signup and login
         } catch (err) {
+            console.error('Signup failed:', err);
             alert('Signup failed. Please try again.');
         } finally {
             setLoading(false); // Set loading to false
@@ -21,7 +28,7 @@ export default function Signup() {
     };
 
     return (
-        <div className="p-4 max-w-md mx-auto">
+        <div className="px-4 py-16 max-w-md mx-auto">
             <h2 className="text-2xl font-bold mb-4">Signup</h2>
             <input
                 type="text"
@@ -29,13 +36,15 @@ export default function Signup() {
                 value={credentials.name}
                 onChange={(e) => setCredentials({ ...credentials, name: e.target.value })}
                 className="w-full mb-4 p-2 border rounded"
+                required
             />
             <input
-                type="email"
-                placeholder="Email"
-                value={credentials.email}
-                onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
+                type="text"
+                placeholder="Phone"
+                value={credentials.phone}
+                onChange={(e) => setCredentials({ ...credentials, phone: e.target.value })}
                 className="w-full mb-4 p-2 border rounded"
+                required
             />
             <input
                 type="password"
@@ -43,6 +52,7 @@ export default function Signup() {
                 value={credentials.password}
                 onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                 className="w-full mb-4 p-2 border rounded"
+                required
             />
             <button
                 onClick={handleSignup}

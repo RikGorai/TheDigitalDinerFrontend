@@ -16,7 +16,7 @@ export default function Login() {
         setLoading(true); // Set loading to true
         try {
             const res = await API.post('/auth/login', { phone, password });
-            login(res.data.user, res.data.token);
+            login(res.data.user, res.data.token); // Save user data and token
             const redirectTo = location.state?.from?.pathname || '/'; // Redirect to the previous page or home
             navigate(redirectTo);
         } catch (err) {
@@ -27,7 +27,7 @@ export default function Login() {
     };
 
     return (
-        <div className="p-4 max-w-md mx-auto">
+        <div className="px-4 py-16 max-w-md mx-auto ">
             <h2 className="text-2xl font-bold mb-4">Login</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <input
