@@ -14,8 +14,6 @@ export default function Signup() {
         try {
             const res = await API.post('/auth/signup', credentials); // Ensure the correct endpoint is used
             const { user, token } = res.data; // Extract user and token from the response
-            localStorage.setItem('user', JSON.stringify(user)); // Save user data in localStorage
-            localStorage.setItem('token', token); // Save token in localStorage
             login(user, token); // Automatically log in the user
             alert('Signup successful! Redirecting to home...');
             navigate('/'); // Redirect to home after successful signup and login
