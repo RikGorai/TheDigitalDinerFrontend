@@ -31,7 +31,7 @@ export default function Nav() {
             {location.pathname !== '/' && ( // Show "The Digital Diner" only on non-home pages
                 <h1
                     onClick={() => navigate('/')} // Redirect to home when clicked
-                    className="absolute left-1/2 transform -translate-x-1/2 text-xl md:text-2xl font-serif font-bold cursor-pointer text-white hover:text-gray-300"
+                    className="absolute left-1/2 transform -translate-x-1/2 text-l md:text-2xl font-serif font-bold cursor-pointer text-white hover:text-gray-300"
                 >
                     The Digital Diner
                 </h1>
