@@ -9,7 +9,7 @@ export default defineConfig({
       '/api': {
         target: process.env.VITE_BACKEND_URL || 'http://localhost:5000', // Use environment variable or fallback to localhost
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''), // Remove '/api' prefix if needed
+        // rewrite: (path) => path.replace(/^\/api/, ''), // Remove '/api' prefix if needed
       },
     },
   },
